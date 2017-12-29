@@ -7,9 +7,12 @@ const MessageSchema = new Schema ({
     type: Schema.Types.ObjectId,
     ref: 'user'
   },
-  sendAt: new Date().getTime();
+  sendAt: {
+    type: String,
+    default: new Date().getTime()
+  }
 })
 
-const message = mongoose.model('comment', MessageSchema)
+const message = mongoose.model('message', MessageSchema)
 
 module.exports = message;

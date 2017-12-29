@@ -10,9 +10,12 @@ const ConversationSchema = new Schema ({
     type: Schema.Types.ObjectId,
     ref: 'message'
   }],
-  startAt: new Date().getTime();
+  startAt: {
+    type: String,
+    default: new Date().getTime()
+  }
 })
 
-const conversation = mongoose.model('comment', ConversationSchema)
+const conversation = mongoose.model('conversation', ConversationSchema)
 
 module.exports = conversation;
