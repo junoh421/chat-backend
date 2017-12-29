@@ -9,7 +9,7 @@ describe('drivers controller', () => {
   it('handles a post request', (done) => {
     Message.count().then( count => {
       request(app)
-      .post('/api/message')
+      .post('/api/messages')
       .send({content: "testing message content"})
       .end(() => {
         Message.count().then(newCount => {
