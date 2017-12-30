@@ -1,9 +1,21 @@
 const MessagesController = require('../controllers/messages_controller');
 const ConversationsController = require('../controllers/conversations_controller');
+const Authentication = require('../controllers/authentication');
+const passportService = require('../services/passport');
+const passport = require('passport');
+
+const requireAuth = passport.authenticate('jwt', { session: false} );
+const requireSignin = passport.authenticate('local', { session: false} );
 
 module.exports = (app) => {
   app.get('/messages', MessagesController.start);
   app.get('/conversations', ConversationsController.start);
+
+  app.get('/', requireAuth, function(req, res) {
+    res.send({message: "Logged In"})
+  });
+  app.post('/signin', requireSignin, Authentication.signin);
+  app.post('/signup', Authentication.signup);
 
   app.post('/api/messages', MessagesController.create);
   app.put('/api/messages/:id', MessagesController.edit);
