@@ -4,9 +4,24 @@ const mongoose = require('mongoose');
 const app = require('../app');
 
 const Conversation = mongoose.model('conversation');
-const Message = mongoose.model('message')
+const Message = mongoose.model('message');
 
 describe('conversations controller', () => {
+  let conversation, firstMessage, secondMessage;
+
+  beforeEach((done) => {
+    conversation = new Conversation ( { } );
+    firstMessage = new Message ( { content: 'first message'} )
+    secondMessage = new Message ( { content: 'second message'} )
+
+    conversation.messages.push(firstMessage, secondMessage)
+
+    Promise.all([ conversation.save(), firstMessage.save(), secondMessage.save()])
+    .then( () => done());
+  });
+
+
+
   it('handles a post request', (done) => {
     Conversation.count().then( count => {
       request(app)
@@ -21,25 +36,9 @@ describe('conversations controller', () => {
     })
   })
 
-  // it('handles a put request', (done) => {
-  //   firstMessage = new Message ({ content: "New message here"});
-  //   conversation = new Conversation ( { } );
-  //   conversation.messages.push(firstMessage);
-  //
-  //   message.save()
-  //   .then( () => {
-  //     request(app)
-  //       .put(`/api/conversations/${conversation._id}`)
-  //       .send({ content: 'updated message content here'})
-  //       .end(() => {
-  //         Message.findOne({ content: 'updated message content here'})
-  //         .then( message => {
-  //           assert(message.content === 'updated message content here');
-  //           done();
-  //         })
-  //       })
-  //   })
-  // })
+  it.only('handles a put request', (done) => {
+    done();
+  })
 
   it('handles a delete request', (done) => {
     conversation = new Conversation ();

@@ -12,6 +12,7 @@ module.exports = {
   edit(req, res, next) {
     const conversationId = req.params.id;
     const conversationProps = req.body;
+    console.log(req.params)
 
     Conversation.findByIdAndUpdate({ _id: conversationId}, conversationProps)
     .then( () => Conversation.findById({ _id: conversationId}))
