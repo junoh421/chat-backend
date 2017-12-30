@@ -10,4 +10,6 @@ module.exports = (app) => {
   app.delete('/api/messages/:id', MessagesController.delete);
 
   app.post('/api/conversations', ConversationsController.create);
+  app.put('/api/conversations/:id', ConversationsController.edit);
+  app.delete('/api/conversation/:id',  ConversationsController.delete);
 }
