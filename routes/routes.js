@@ -6,5 +6,8 @@ module.exports = (app) => {
   app.get('/conversations', ConversationsController.start);
 
   app.post('/api/messages', MessagesController.create);
+  app.put('/api/messages/:id', MessagesController.edit);
+  app.delete('/api/messages/:id', MessagesController.delete);
+
   app.post('/api/conversations', ConversationsController.create);
 }

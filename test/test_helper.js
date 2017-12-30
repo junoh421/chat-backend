@@ -14,7 +14,9 @@ before((done) => {
 //
 beforeEach((done) => {
   const { message, conversation } = mongoose.connection.collections
-  Promise.all([message.drop, conversation.drop])
-    .then(() => done())
-    .catch(() => done());
+  message.drop(() => {
+    conversation.drop(() => {
+      done();
+    })
+  })
 });
