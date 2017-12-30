@@ -20,8 +20,6 @@ describe('conversations controller', () => {
     .then( () => done());
   });
 
-
-
   it('handles a post request', (done) => {
     Conversation.count().then( count => {
       request(app)
@@ -34,10 +32,6 @@ describe('conversations controller', () => {
         })
       })
     })
-  })
-
-  it.only('handles a put request', (done) => {
-    done();
   })
 
   it('handles a delete request', (done) => {
