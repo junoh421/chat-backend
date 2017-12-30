@@ -8,14 +8,11 @@ const requireAuth = passport.authenticate('jwt', { session: false} );
 const requireSignin = passport.authenticate('local', { session: false} );
 
 module.exports = (app) => {
-  app.get('/messages', MessagesController.start);
-  app.get('/conversations', ConversationsController.start);
-
   app.get('/', requireAuth, function(req, res) {
     res.send({message: "Logged In"})
   });
-  app.post('/signin', requireSignin, Authentication.signin);
-  app.post('/signup', Authentication.signup);
+  app.post('/api/signin', requireSignin, Authentication.signin);
+  app.post('/api/signup', Authentication.signup);
 
   app.post('/api/messages', MessagesController.create);
   app.put('/api/messages/:id', MessagesController.edit);
