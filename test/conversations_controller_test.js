@@ -24,7 +24,7 @@ describe('conversations controller', () => {
 
   it('handles a get request', (done) => {
     request(app)
-      .get(`/api/conversation/${conversation._id}`)
+      .get(`/api/conversations/${conversation._id}`)
       .expect(200)
       .then(response => {
         assert(response.body.messages[0]._id.toString() === firstMessage._id.toString())
@@ -36,7 +36,7 @@ describe('conversations controller', () => {
   it('handles a post request', (done) => {
     Conversation.count().then( count => {
       request(app)
-      .post('/api/conversations')
+      .post('/api/conversation')
       .send({})
       .end(() => {
         Conversation.count().then(newCount => {

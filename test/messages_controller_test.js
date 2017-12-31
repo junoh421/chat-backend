@@ -9,7 +9,7 @@ describe('messages_controller', () => {
   it('handles a post request', (done) => {
     Message.count().then( count => {
       request(app)
-      .post('/api/messages')
+      .post('/api/message')
       .send({content: "testing message content"})
       .end(() => {
         Message.count().then(newCount => {
