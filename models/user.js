@@ -33,6 +33,6 @@ userSchema.methods.comparePassword = function(candidatePassword, callback) {
   })
 }
 
-const UserClass = mongoose.model('user', userSchema);
+const user = mongoose.model('user', userSchema);
 
-module.exports = UserClass
+module.exports = user

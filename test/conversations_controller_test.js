@@ -3,8 +3,10 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../app');
 
-const Conversation = mongoose.model('conversation');
-const Message = mongoose.model('message');
+const Message = require('../models/message');
+const User = require('../models/user');
+const Conversation = require('../models/conversation');
+
 
 describe('conversations controller', () => {
   let conversation, firstMessage, secondMessage;
@@ -19,6 +21,17 @@ describe('conversations controller', () => {
     Promise.all([ conversation.save(), firstMessage.save(), secondMessage.save()])
     .then( () => done());
   });
+
+  it('handles a get request', (done) => {
+    request(app)
+      .get(`/api/conversation/${conversation._id}`)
+      .expect(200)
+      .then(response => {
+        assert(response.body.messages[0]._id.toString() === firstMessage._id.toString())
+        assert(response.body.messages[1]._id.toString() === secondMessage._id.toString())
+        done()
+      })
+  })
 
   it('handles a post request', (done) => {
     Conversation.count().then( count => {

@@ -16,7 +16,7 @@ describe('authentication controller', () => {
     bob.save().then( () => done());
   });
 
-  it.only('handles successful signin and checks token in response', (done) => {
+  it('handles successful signin and checks token in response', (done) => {
     request(app)
       .post('/api/signin')
       .send({

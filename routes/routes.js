@@ -18,6 +18,7 @@ module.exports = (app) => {
   app.put('/api/messages/:id', MessagesController.edit);
   app.delete('/api/messages/:id', MessagesController.delete);
 
+  app.get('/api/conversation/:id', ConversationsController.read);
   app.post('/api/conversations', ConversationsController.create);
   app.delete('/api/conversation/:id',  ConversationsController.delete);
 }
