@@ -15,10 +15,10 @@ module.exports = (app) => {
   app.post('/api/signup', Authentication.signup);
 
   app.post('/api/messages', MessagesController.create);
-  app.put('/api/messages/:id', MessagesController.edit);
-  app.delete('/api/messages/:id', MessagesController.delete);
+  app.put('/api/message/:id', MessagesController.edit);
+  app.delete('/api/message/:id', MessagesController.delete);
 
   app.get('/api/conversation/:id', ConversationsController.read);
-  app.post('/api/conversations', ConversationsController.create);
+  app.post('/api/conversation', ConversationsController.create);
   app.delete('/api/conversation/:id',  ConversationsController.delete);
 }
