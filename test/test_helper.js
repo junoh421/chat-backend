@@ -13,10 +13,12 @@ before((done) => {
 });
 //
 beforeEach((done) => {
-  const { message, conversation } = mongoose.connection.collections
+  const { message, conversation, user } = mongoose.connection.collections
   message.drop(() => {
     conversation.drop(() => {
-      done();
+      user.drop(() => {
+        done();
+      })
     })
   })
 });
