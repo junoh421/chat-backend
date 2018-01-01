@@ -4,20 +4,32 @@ const Conversation = require('../models/conversation');
 
 module.exports = {
   sendReply(req, res, next) {
-    const reply = new Message({
-      conversationId: req.body.conversation_id,
-      content: req.body.content,
-      user: req.body.user_id
-    });
+    const username = req.body.username;
+    const conversationId = req.body.conversation_id;
+    const content = req.body.content;
+    const password = req.body.password;
 
-    reply.save(function(err, sentReply) {
-      if (err) {
-        res.send({ error: err });
-        return next(err);
+    User.findOne({userName: username}, function(err, user) {
+      if (!user) {
+        res.status(422).send({ error: 'Username does not exist' });
+        return next();
       }
 
-      res.status(200).json({ message: 'Reply successfully sent!' });
-      return(next);
+      const reply = new Message({
+        conversationId: conversationId,
+        content: content,
+        user: user._id
+      });
+
+      reply.save(function(err, sentReply) {
+        if (!sentReply) {
+          res.status(422).send({ error: 'Conversation does not exist' });
+          return next();
+        }
+
+        res.status(200).json({ message: 'Reply successfully sent!' });
+        return(next);
+      })
     })
   }
 }
