@@ -10,7 +10,7 @@ function tokenForUser(user) {
 exports.signin = function(req, res, next) {
   res.send({
     token: tokenForUser(req.user),
-    currentUser: req.user
+    user: req.user
   });
 }
 
@@ -50,7 +50,7 @@ exports.signup = function(req, res, next) {
       if (err) {return next(err); }
       res.json({
         token: tokenForUser(user),
-        currentUser: req.user
+        user: req.user
       });
     });
   });
