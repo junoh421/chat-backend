@@ -1,10 +1,16 @@
 const Message = require('../models/message')
+const User = require('../models/user')
+
 
 module.exports = {
   create(req, res, next) {
-    const messageProps = req.body
+    message = new Message({
+      content: req.body.content,
+      user: req.body.userId
+    })
 
-    Message.create(messageProps).then(message => res.send(message))
+    message.save()
+    .then(message => res.send(message))
     .catch(next)
   },
   edit(req, res, next) {
