@@ -6,16 +6,9 @@ const ConversationSchema = new Schema ({
     type: Schema.Types.ObjectId,
     ref: 'user'
   }],
-  messages: [{
-    type: Schema.Types.ObjectId,
-    ref: 'message'
-  }],
-  startAt: {
-    type: String,
-    default: new Date().getTime()
-  }
+  },
+  {
+  timestamps: true
 })
 
-const conversation = mongoose.model('conversation', ConversationSchema)
-
-module.exports = conversation;
+module.exports = mongoose.model('conversation', ConversationSchema)

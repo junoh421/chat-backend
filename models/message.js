@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const MessageSchema = new Schema ({
-  content: String,
+const MessageSchema = new Schema({
+  conversationId: {
+    type: Schema.Types.ObjectId,
+    ref: 'conversation'
+  },
+  content: {
+    type: String,
+    required: true
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'user'
-  },
-  sendAt: {
-    type: String,
-    default: new Date().getTime()
   }
-})
+},
+{
+  timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
+});
 
-const message = mongoose.model('message', MessageSchema)
-
-module.exports = message;
+module.exports = mongoose.model('message', MessageSchema)

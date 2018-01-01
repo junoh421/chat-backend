@@ -1,32 +1,23 @@
-const Message = require('../models/message')
-const User = require('../models/user')
-
+const Message = require('../models/message');
+const User = require('../models/user');
+const Conversation = require('../models/conversation');
 
 module.exports = {
-  create(req, res, next) {
-    message = new Message({
+  sendReply(req, res, next) {
+    const reply = new Message({
+      conversationId: req.body.conversation_id,
       content: req.body.content,
-      user: req.body.userId
+      user: req.body.user_id
+    });
+
+    reply.save(function(err, sentReply) {
+      if (err) {
+        res.send({ error: err });
+        return next(err);
+      }
+
+      res.status(200).json({ message: 'Reply successfully sent!' });
+      return(next);
     })
-
-    message.save()
-    .then(message => res.send(message))
-    .catch(next)
-  },
-  edit(req, res, next) {
-    const messageId = req.params.id;
-    const messageProps = req.body;
-
-    Message.findByIdAndUpdate({ _id: messageId}, messageProps)
-    .then( () => Message.findById({ _id: messageId}))
-    .then( message => res.send(message))
-    .catch(next);
-  },
-  delete(req, res, next) {
-    const messageId = req.params.id;
-
-    Message.findByIdAndRemove({ _id: messageId})
-    .then( message => res.status(204).send(mesage))
-    .catch(next);
   }
 }

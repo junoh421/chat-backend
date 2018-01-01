@@ -14,11 +14,8 @@ module.exports = (app) => {
   app.post('/api/signin', requireSignin, Authentication.signin);
   app.post('/api/signup', Authentication.signup);
 
-  app.post('/api/message', MessagesController.create);
-  app.put('/api/messages/:id', MessagesController.edit);
-  app.delete('/api/messages/:id', MessagesController.delete);
-
-  app.post('/api/conversation', ConversationsController.create);
-  app.get('/api/conversations/:id', ConversationsController.read);
-  app.delete('/api/conversations/:id',  ConversationsController.delete);
+  app.get('/api/conversations', ConversationsController.getConversations);
+  app.get('/api/conversation/:id', ConversationsController.getConversation);
+  app.post('/api/conversation', ConversationsController.startConversation);
+  app.post('/api/message', MessagesController.sendReply);
 }
