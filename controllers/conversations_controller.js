@@ -40,13 +40,14 @@ module.exports = {
      .sort('-createdAt')
      .populate({
        path: 'user',
-       select: 'user.userName'
+       select: 'userName fullName'
      })
      .exec(function(err, messages) {
        if (err) {
          res.send({ error: err });
          return next(err);
        }
+       console.log(messages)
        res.status(200).json({ conversation: messages });
      });
   },
