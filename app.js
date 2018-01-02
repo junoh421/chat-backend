@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
+app.use(express.static('public'));
 routes(app);
 
 app.use( (err, req, res, next) => {
