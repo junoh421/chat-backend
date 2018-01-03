@@ -3,6 +3,7 @@ const User = require('../models/user');
 module.exports = {
   getUsers(req, res, next) {
     User.find({ })
+    .select('_id userName fullName')
     .exec(function(err, users) {
       if (err) {
         res.send({ error: err });
