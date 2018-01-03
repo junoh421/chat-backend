@@ -1,5 +1,6 @@
 const MessagesController = require('../controllers/messages_controller');
 const ConversationsController = require('../controllers/conversations_controller');
+const UsersController = require('../controllers/users_controller');
 const Authentication = require('../controllers/authentication');
 const passportService = require('../services/passport');
 const passport = require('passport');
@@ -13,9 +14,9 @@ module.exports = (app) => {
   });
   app.post('/api/signin', requireSignin, Authentication.signin);
   app.post('/api/signup', Authentication.signup);
-
   app.get('/api/conversations', ConversationsController.getConversations);
   app.get('/api/conversation/:id', ConversationsController.getConversation);
   app.post('/api/conversation', ConversationsController.startConversation);
   app.post('/api/message', MessagesController.sendReply);
+  app.get('/api/users', UsersController.getUsers);
 }

@@ -37,7 +37,7 @@ module.exports = {
   getConversation(req, res, next) {
     Message.find({ conversationId: req.params.id })
      .select('createdAt content user')
-     .sort('-createdAt')
+     .sort('createdAt')
      .populate({
        path: 'user',
        select: 'userName fullName'
