@@ -4,34 +4,20 @@ const User = require('../models/user');
 
 module.exports = {
   getConversations(req, res, next) {
-    Conversation.find({ users: req.user._id })
-    .select('_id')
+    console.log(req.params.userId)
+    Conversation.find({ users: req.params.userId })
+    .select('_id users')
+    .populate({
+      path: 'users',
+      select: 'userName fullName'
+    })
     .exec(function(err, conversations) {
       if (err) {
         res.send({ error: err });
         return next(err);
       }
-      // Set up empty array to hold conversations + most recent message
-      let fullConversations = [];
-      conversations.forEach(function(conversation) {
-        Message.find({ 'conversationId': conversation._id })
-          .sort('-createdAt')
-          .limit(1)
-          .populate({
-            path: "user",
-            select: "fullName"
-          })
-          .exec(function(err, message) {
-            if (err) {
-              res.send({ error: err });
-              return next(err);
-            }
-            fullConversations.push(message);
-            if(fullConversations.length === conversations.length) {
-              return res.status(200).json({ conversations: fullConversations });
-            }
-          });
-      });
+      console.log(conversations)
+      return res.status(200).json({ conversations: conversations });
     });
   },
   getConversation(req, res, next) {

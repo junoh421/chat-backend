@@ -14,7 +14,7 @@ module.exports = (app) => {
   });
   app.post('/api/signin', requireSignin, Authentication.signin);
   app.post('/api/signup', Authentication.signup);
-  app.get('/api/conversations', ConversationsController.getConversations);
+  app.get('/api/conversations/:userId', ConversationsController.getConversations);
   app.get('/api/conversation/:id', ConversationsController.getConversation);
   app.post('/api/conversation', ConversationsController.startConversation);
   app.post('/api/message', MessagesController.sendReply);
