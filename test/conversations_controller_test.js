@@ -13,17 +13,17 @@
 //
 //   beforeEach((done) => {
 //     conversation = new Conversation ( { } );
-//     firstMessage = new Message ( { content: 'first message'} )
-//     secondMessage = new Message ( { content: 'second message'} )
+//     bob = new User ({email: 'testing123@example.com', password: "sixchar1", fullName: "Bob Smith", userName: "bobsmith"});
+//     joe = new User ({email: 'testing1234@example.com', password: "sixchar1", fullName: "Joe Smith", userName: "joesmith"});
 //
-//     conversation.messages.push(firstMessage, secondMessage)
+//     conversation.users.push(joe, bob)
 //     console.log(conversation)
 //
-//     Promise.all([ conversation.save(), firstMessage.save(), secondMessage.save()])
+//     Promise.all([ conversation.save(), joe.save(), bob.save()])
 //     .then( () => done());
 //   });
 //
-//   it.only('handles a get request', (done) => {
+//   it('handles a get request', (done) => {
 //     request(app)
 //       .get(`/api/conversations/${conversation._id}`)
 //       .expect(200)
@@ -34,17 +34,19 @@
 //       })
 //   })
 //
-//   it('handles a post request', (done) => {
-//     Conversation.count().then( count => {
-//       request(app)
-//       .post('/api/conversation')
-//       .send({})
-//       .end(() => {
-//         Conversation.count().then(newCount => {
-//           assert(count + 1 === newCount);
-//           done();
-//         })
-//       })
+//   it.only('handles a post request', (done) => {
+//     Conversation.find( { $and: [ {user: bob._id }, { user: joe._id } ] }).then( conversation => {
+//       console.log(conversation.users)
+//     })
+//
+//     request(app)
+//     .post('/api/conversation')
+//     .send({
+//     	"userId":"5a4968f22b9a6996b7e484a2",
+//     	"recipientId":"5a4a65e7a23b7cc44dedfa6b"
+//     })
+//     .then(response => {
+//       done();
 //     })
 //   })
 //

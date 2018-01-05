@@ -38,22 +38,31 @@ module.exports = {
      });
   },
   startConversation(req, res, next) {
-    if(!req.body.recipientId) {
-      res.status(422).send({ error: 'Please choose a valid recipient for your conversation.' });
-      return next();
-    }
+    let userId = req.body.userId;
+    let recipientId = req.body.recipientId;
 
-    const conversation = new Conversation({
-      users: [req.body.userId, req.body.recipientId]
-    });
+    Conversation.findOne({ users: [userId, recipientId]}, function(error, existingConversation) {
+      if (error) { return next(err); }
 
-    conversation.save(function(err, conversation) {
-      if (err) {
-        res.send({ error: err });
-        return next(err);
+      if (!recipientId) {
+        return res.status(422).send({error: "Please choose a valid recipient for your conversation"})
       }
 
-      res.status(200).json({ message: 'Conversation started!', conversation: conversation });
+      if (existingConversation) {
+        return res.send({message: "Conversation in progress", conversation: existingConversation})
+      }
+
+      const newConversation = new Conversation({
+        users: [ userId, recipientId ]
+      });
+
+      newConversation.save(function(err, newConversation) {
+        if (err) {return next(err); }
+        res.status(200).json({
+          message: "Conversation started!",
+          conversation: newConversation
+        });
+      });
     });
   }
 }
