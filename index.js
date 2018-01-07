@@ -4,14 +4,18 @@ const port = process.env.PORT || 8000;
 const server = http.createServer(app);
 const socket = require('socket.io')
 
-server.listen(port);
-console.log('Server listening:', port);
-
 const io = socket(server);
 io.on('connection', function(socket) {
   console.log('User connected', socket.id)
+
+  socket.on('send:message', function(message) {
+    io.emit('send:message', message);
+  });
 
   socket.on('disconnect', () => {
     console.log('User disconnected', socket.id);
   });
 })
+
+server.listen(port);
+console.log('Server listening:', port);
