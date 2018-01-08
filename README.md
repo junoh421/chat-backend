@@ -11,7 +11,7 @@
 - PassportJS for middleware authentication
 
 ### Todo
-- Socket.io
 - Delete conversations
 - Delete/Update messages
 - Start conversation with more than one user
+- Need to fix authentication controller for signing up as new user
