@@ -46,11 +46,11 @@ exports.signup = function(req, res, next) {
       password: password
     });
 
-    user.save(function(err) {
+    user.save(function(err, user) {
       if (err) {return next(err); }
       res.json({
         token: tokenForUser(user),
-        user: req.user
+        user: user
       });
     });
   });
