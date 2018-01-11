@@ -38,13 +38,12 @@ module.exports = {
      });
   },
   startConversation(req, res, next) {
-    let userId = req.body.userId;
-    let recipientId = req.body.recipientId;
+    let recipients = req.body.recipients;
 
-    Conversation.findOne({ users: [userId, recipientId]}, function(error, existingConversation) {
+    Conversation.findOne({ users: [...recipients]}, function(error, existingConversation) {
       if (error) { return next(err); }
 
-      if (!recipientId) {
+      if (!recipients) {
         return res.status(422).send({error: "Please choose a valid recipient for your conversation"})
       }
 
@@ -53,7 +52,7 @@ module.exports = {
       }
 
       const newConversation = new Conversation({
-        users: [ userId, recipientId ]
+        users: [...recipients]
       });
 
       newConversation.save(function(err, newConversation) {
