@@ -13,5 +13,54 @@ module.exports = {
       console.log(users)
       res.status(200).json({ users: users });
     });
+  },
+  getUser(req, res, next) {
+    console.log(req.params.id)
+    User.find({_id: req.params.id })
+    .exec(function(err, user) {
+      if (err) {
+        res.send({ error: err });
+        return next(err);
+      }
+
+      res.status(200).json({ user: user });
+    });
+  },
+  updateUser(req, res, next) {
+    const id = req.params.id
+    const email = req.body.email;
+    const fullName = req.body.fullName;
+    const userName = req.body.userName;
+    const password = req.body.password;
+
+    if (!email || !fullName || !userName || !password) {
+    	return res.status(422).send({error: "You must provide information" });
+    }
+
+    User.findOne({ email: email}, function(error, existingUser) {
+      if (error) { return next(err); }
+
+      if (existingUser) {
+        return res.status(422).send({error: "Email is in use"})
+      }
+
+      User.findOne({ userName: userName}, function(error, existingUser) {
+        if (error) { return next(err); }
+
+        if (existingUser) {
+          return res.status(422).send({error: "Username is in use"})
+        }
+      })
+
+      User.findByIdAndUpdate(id, { email, fullName, userName, password})
+      .exec(function(err, user) {
+        if (err) {
+          res.send({ error: err });
+          return next(err);
+        }
+
+        res.status(200).json({ message: "Profile Updated", user: user });
+      });
+    });
   }
 }

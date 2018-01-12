@@ -19,4 +19,6 @@ module.exports = (app) => {
   app.post('/api/conversation', ConversationsController.startConversation);
   app.post('/api/message', MessagesController.sendReply);
   app.get('/api/users', UsersController.getUsers);
+  app.get('/api/user/:id', UsersController.getUser);
+  app.put('/api/user/:id', UsersController.updateUser);
 }
