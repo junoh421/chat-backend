@@ -52,14 +52,27 @@ module.exports = {
         }
       })
 
-      User.findByIdAndUpdate(id, { email, fullName, userName, password})
+      User.findById({_id: id})
       .exec(function(err, user) {
+
         if (err) {
           res.send({ error: err });
           return next(err);
         }
 
-        res.status(200).json({ message: "Profile Updated", user: user });
+        user.email = email;
+        user.fullName = fullName;
+        user.userName = userName;
+        user.password = password;
+
+        user.save(function(err, user) {
+          if (err) {return next(err); }
+
+          res.json({
+            message: "Profile Updated",
+            user: user
+          });
+        });
       });
     });
   }

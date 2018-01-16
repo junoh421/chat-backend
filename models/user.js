@@ -12,7 +12,6 @@ const userSchema = new Schema({
 userSchema.pre('save', function(next) {
   const user = this;
 
-
   bcrypt.genSalt(10, function(err, salt){
     if (err) { return next(err) }
 
