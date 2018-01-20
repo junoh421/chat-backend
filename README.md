@@ -9,8 +9,9 @@
 - bcrypt for password hashing
 - JSON Web Tokens for user authentication
 - PassportJS for middleware authentication
+- Tests for authentication, conversations, messages, and users controller
 
 ### Todo
-- Delete conversations
-- Delete/Update messages
-- Start conversation with more than one user
+- Add user profile picture
+- Read/Unread messages
+- Deploy to Heroku
