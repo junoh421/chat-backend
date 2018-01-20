@@ -14,10 +14,16 @@ module.exports = (app) => {
   });
   app.post('/api/signin', requireSignin, Authentication.signin);
   app.post('/api/signup', Authentication.signup);
+
   app.get('/api/conversations/:userId', ConversationsController.getConversations);
   app.get('/api/conversation/:id', ConversationsController.getConversation);
   app.post('/api/conversation', ConversationsController.startConversation);
+
   app.post('/api/message', MessagesController.sendReply);
+  app.put('/api/message/:id', MessagesController.updateMessage);
+  app.delete('/api/message/:id', MessagesController.deleteMessage);
+
+
   app.get('/api/users', UsersController.getUsers);
   app.get('/api/user/:id', UsersController.getUser);
   app.put('/api/user/:id', UsersController.updateUser);

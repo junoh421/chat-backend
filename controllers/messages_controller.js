@@ -23,5 +23,30 @@ module.exports = {
       res.status(200).json({ message: 'Reply successfully sent!' });
       return(next);
     })
+  },
+  deleteMessage(req, res, next) {
+    const id = req.params.id;
+
+    Message.findByIdAndRemove(id)
+    .exec(function(err) {
+      if (err) {
+        res.send({ error: err });
+        return next(err);
+      }
+      res.status(200).json({ message: "Message Deleted!" });
+    });
+  },
+  updateMessage(req, res, next) {
+    const id = req.params.id;
+    const content = req.body.content;
+
+    Message.findByIdAndUpdate(id, { content: content})
+    .exec(function(err, message) {
+      if (err) {
+        res.send({ error: err });
+        return next(err);
+      }
+      res.status(200).json({ message: "Message Updated!"});
+    });
   }
 }
