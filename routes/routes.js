@@ -1,6 +1,7 @@
 const MessagesController = require('../controllers/messages_controller');
 const ConversationsController = require('../controllers/conversations_controller');
 const UsersController = require('../controllers/users_controller');
+const PhotosController = require('../controllers/photos_controller');
 const Authentication = require('../controllers/authentication');
 const passportService = require('../services/passport');
 const passport = require('passport');
