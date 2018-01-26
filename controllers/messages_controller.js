@@ -3,6 +3,23 @@ const User = require('../models/user');
 const Conversation = require('../models/conversation');
 
 module.exports = {
+  getMessages(req, res, next) {
+    Message.find({ conversationId: req.params.conversationId })
+     .select('createdAt content user')
+     .sort('createdAt')
+     .populate({
+       path: 'user',
+       select: 'userName fullName'
+     })
+     .exec(function(err, messages) {
+       if (err) {
+         res.send({ error: err });
+         return next(err);
+       }
+       console.log(messages)
+       res.status(200).json({ messages: messages });
+     });
+  },
   sendReply(req, res, next) {
     const userId = req.body.userId;
     const conversationId = req.body.conversationId;

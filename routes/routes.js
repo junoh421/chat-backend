@@ -16,13 +16,12 @@ module.exports = (app) => {
   app.post('/api/signup', Authentication.signup);
 
   app.get('/api/conversations/:userId', ConversationsController.getConversations);
-  app.get('/api/conversation/:id', ConversationsController.getConversation);
   app.post('/api/conversation', ConversationsController.startConversation);
 
+  app.get('/api/messages/:conversationId', MessagesController.getMessages);
   app.post('/api/message', MessagesController.sendReply);
   app.put('/api/message/:id', MessagesController.updateMessage);
   app.delete('/api/message/:id', MessagesController.deleteMessage);
-
 
   app.get('/api/users', UsersController.getUsers);
   app.get('/api/user/:id', UsersController.getUser);

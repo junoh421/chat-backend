@@ -60,24 +60,6 @@ describe('conversations controller', () => {
       })
   })
 
-  it("returns first conversation's messages", (done) => {
-    firstMessage = new Message ( { content: "bob's message content here", user: bob._id, conversationId: firstConversation._id} )
-    secondMessage = new Message ( { content: "joe's message content here", user: joe._id, conversationId: firstConversation._id} )
-
-    Promise.all([ firstMessage.save(), secondMessage.save()])
-    .then(()=> {
-      request(app)
-        .get(`/api/conversation/${firstConversation._id}`)
-        .expect(200)
-        .then(response => {
-          assert(response.body.conversation.length === 2)
-          assert(response.body.conversation[0]._id.toString() === firstMessage._id.toString())
-          assert(response.body.conversation[1]._id.toString() === secondMessage._id.toString())
-          done()
-        })
-    })
-  })
-
   it('starts a conversation with bob, joe, and steve', (done) => {
     request(app)
     .post('/api/conversation')

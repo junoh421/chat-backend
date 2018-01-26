@@ -20,23 +20,6 @@ module.exports = {
       return res.status(200).json({ conversations: conversations });
     });
   },
-  getConversation(req, res, next) {
-    Message.find({ conversationId: req.params.id })
-     .select('createdAt content user')
-     .sort('createdAt')
-     .populate({
-       path: 'user',
-       select: 'userName fullName'
-     })
-     .exec(function(err, messages) {
-       if (err) {
-         res.send({ error: err });
-         return next(err);
-       }
-       console.log(messages)
-       res.status(200).json({ conversation: messages });
-     });
-  },
   startConversation(req, res, next) {
     let recipients = req.body.recipients;
 
