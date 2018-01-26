@@ -26,4 +26,5 @@ module.exports = (app) => {
   app.get('/api/users', UsersController.getUsers);
   app.get('/api/user/:id', UsersController.getUser);
   app.put('/api/user/:id', UsersController.updateUser);
+  app.get('/api/users/:conversationId', UsersController.getUsersInConversation)
 }

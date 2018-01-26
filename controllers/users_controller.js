@@ -1,6 +1,22 @@
 const User = require('../models/user');
+const Conversation = require('../models/conversation');
 
 module.exports = {
+  getUsersInConversation(req, res, next) {
+    Conversation.find({ _id: req.params.conversationId })
+    .select('_id users')
+    .populate({
+      path: 'users',
+      select: 'userName fullName'
+    })
+    .exec(function(err, conversation) {
+      if (err) {
+        res.send({ error: err });
+        return next(err);
+      }
+      return res.status(200).json({ users: conversation[0].users });
+    });
+  },
   getUsers(req, res, next) {
     User.find({ })
     .select('_id userName fullName')
