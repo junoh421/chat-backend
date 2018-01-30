@@ -57,12 +57,13 @@ module.exports = {
     const id = req.params.id;
     const content = req.body.content;
 
-    Message.findByIdAndUpdate(id, { content: content})
+    Message.findByIdAndUpdate(id, { content: content}, {new: true})
     .exec(function(err, message) {
       if (err) {
         res.send({ error: err });
         return next(err);
       }
+      console.log(message)
       res.status(200).json({ message: "Message Updated!"});
     });
   }
