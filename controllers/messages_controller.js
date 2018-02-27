@@ -37,7 +37,7 @@ module.exports = {
         return next();
       }
 
-      res.status(200).json({ message: 'Reply successfully sent!' });
+      res.status(200).json({ message: 'Reply successfully sent!', reply: sentReply});
       return(next);
     })
   },
@@ -50,7 +50,7 @@ module.exports = {
         res.send({ error: err });
         return next(err);
       }
-      res.status(200).json({ message: "Message Deleted!" });
+      res.status(200).json({ message: "Message Deleted!", id: id});
     });
   },
   updateMessage(req, res, next) {
@@ -63,8 +63,7 @@ module.exports = {
         res.send({ error: err });
         return next(err);
       }
-      console.log(message)
-      res.status(200).json({ message: "Message Updated!"});
+      res.status(200).json({ message: "Message Updated!", updatedReply: message});
     });
   }
 }
