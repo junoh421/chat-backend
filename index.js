@@ -8,9 +8,9 @@ const io = socket(server);
 io.on('connection', function(socket) {
   console.log('User connected', socket.id)
 
-  // socket.on('send:message', function(conversationId) {
-  //   io.emit('receieve:message', conversationId);
-  // });
+  socket.on('send:message', function(message) {
+    io.emit('sent:message', message);
+  });
 
   socket.on('update:message', function(message) {
     io.emit('updated:message', message);
