@@ -36,7 +36,20 @@ module.exports = {
         return next();
       }
 
-      res.status(200).json({ message: 'Reply successfully sent!', reply: sentReply});
+      Message.find({ _id: sentReply._id })
+       .select('createdAt content user')
+       .populate({
+         path: 'user',
+         select: '_id userName fullName'
+       })
+       .exec(function(err, message) {
+         if (err) {
+           res.send({ error: err });
+           return next(err);
+         }
+         res.status(200).json({ message: 'Reply successfully sent!', reply: message});
+       });
+
       return(next);
     })
   },
