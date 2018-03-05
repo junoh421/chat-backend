@@ -16,7 +16,20 @@ module.exports = {
          res.send({ error: err });
          return next(err);
        }
-       res.status(200).json({ messages: messages });
+
+       Conversation.find({ _id: req.params.conversationId })
+       .select('_id users')
+       .populate({
+         path: 'users',
+         select: 'userName fullName'
+       })
+       .exec(function(err, conversation) {
+         if (err) {
+           res.send({ error: err });
+           return next(err);
+         }
+         return res.status(200).json({ messages: messages, users: conversation[0].users });
+       });
      });
   },
   sendReply(req, res, next) {
