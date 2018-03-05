@@ -8,9 +8,15 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 
-if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect('mongodb://localhost/chat');
-}
+var uristring = process.env.MONGODB_URI || 'mongodb://localhost/chat';
+
+mongoose.connect(uristring, function (err, res) {
+  if (err) {
+    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+  } else {
+    console.log ('Succeeded connected to: ' + uristring);
+  }
+});
 
 app.use(bodyParser.json());
 app.use(morgan('combined'));
