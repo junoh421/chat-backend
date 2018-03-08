@@ -1,3 +1,5 @@
+Live demo: [Chat Demo](http://chatappdemoversion.herokuapp.com)
+
 # Chat 1.0.0 (Backend)
 - User can signup/signin
 - User can start a conversation by searching user
@@ -14,4 +16,4 @@
 ### Todo
 - Add user profile picture
 - Read/Unread messages
-- Deploy to Heroku
+- Implement socket for online users
