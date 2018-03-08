@@ -23,7 +23,7 @@ module.exports = {
   startConversation(req, res, next) {
     let recipients = req.body.recipients;
 
-    Conversation.findOne({ users: [...recipients]}, function(error, existingConversation) {
+    Conversation.findOne({ users: { $size : recipients.length, $all: [...recipients] } }, function(error, existingConversation) {
       if (error) { return next(err); }
 
       if (!recipients) {

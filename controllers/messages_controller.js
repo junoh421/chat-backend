@@ -61,34 +61,37 @@ module.exports = {
            return next(err);
          }
          res.status(200).json({ message: 'Reply successfully sent!', reply: message});
+         req.app.io.emit('sent:message', {message});
        });
 
       return(next);
     })
   },
   deleteMessage(req, res, next) {
-    const id = req.params.id;
+    const messageId = req.params.id;
 
-    Message.findByIdAndRemove(id)
+    Message.findByIdAndRemove(messageId)
     .exec(function(err) {
       if (err) {
         res.send({ error: err });
         return next(err);
       }
-      res.status(200).json({ message: "Message Deleted!", id: id});
+      res.status(200).json({ message: "Message Deleted!", id: messageId});
+      req.app.io.emit('deleted:message', {messageId});
     });
   },
   updateMessage(req, res, next) {
-    const id = req.params.id;
+    const messageId = req.params.id;
     const content = req.body.content;
 
-    Message.findByIdAndUpdate(id, { content: content}, {new: true})
+    Message.findByIdAndUpdate(messageId , { content: content}, {new: true})
     .exec(function(err, message) {
       if (err) {
         res.send({ error: err });
         return next(err);
       }
       res.status(200).json({ message: "Message Updated!", updatedMessage: message});
+      req.app.io.emit('updated:message', {messageId, content});
     });
   }
 }
