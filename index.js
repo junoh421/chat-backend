@@ -7,10 +7,15 @@ const io = socket(server);
 app.io = io;
 
 io.on('connection', function(socket) {
-  console.log('User connected', socket.id)
+  socket.on('user:login', (userId) => {
+    socket.user = userId;
+    console.log('user-' + socket.user.userId + ' online');
+    socket.emit('online:user', userId);
+  })
 
   socket.on('disconnect', () => {
-    console.log('User disconnected', socket.id);
+    userId = socket.user;
+    socket.emit('offline:user', userId);
   });
 })
 

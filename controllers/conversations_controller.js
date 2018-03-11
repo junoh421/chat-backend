@@ -4,7 +4,6 @@ const User = require('../models/user');
 
 module.exports = {
   getConversations(req, res, next) {
-    console.log(req.params.userId)
     Conversation.find({ users: req.params.userId })
     .select('_id users')
     .populate({
@@ -16,7 +15,6 @@ module.exports = {
         res.send({ error: err });
         return next(err);
       }
-      console.log(conversations)
       return res.status(200).json({ conversations: conversations });
     });
   },

@@ -25,13 +25,10 @@ module.exports = {
         res.send({ error: err });
         return next(err);
       }
-
-      console.log(users)
       res.status(200).json({ users: users });
     });
   },
   getUser(req, res, next) {
-    console.log(req.params.id)
     User.find({_id: req.params.id })
     .exec(function(err, user) {
       if (err) {
